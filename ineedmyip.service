@@ -8,7 +8,7 @@ Restart=always
 TimeoutStartSec=0
 Restart=always
 RestartSec=60s
-ExecStart=/usr/bin/python /home/ineedmyip/server/server.py
+ExecStart=/usr/bin/python /opt/ineedmyip/server/server.py
 
 [Install]
 WantedBy=multi-user.target
