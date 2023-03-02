@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>I need my IP</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.get("https://checkip.amazonaws.com/", function(data) {
+                $("#ip-address").html(data);
+            });
+            $.get("https://raw.githubusercontent.com/iitggithub/ineedmyip/main/README.md", function(data) {
+                var html = marked(data);
+                $("#readme-content").html(html);
+            });
+        });
+    </script>
+    <style>
+        /* Basic CSS for centering text on the page */
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+        }
+	#readme-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    Your public facing IP address is: <div id="ip-address"></div>
+    <div id="readme-content"></div>
+</body>
+</html>
