@@ -56,3 +56,62 @@ $ curl -so - https://raw.githubusercontent.com/iitggithub/ineedmyip/main/client.
 1.2.3.4
 $
 ```
+
+## Make your own server
+
+You need to install docker and how you do that will depend on your Operating System (OS) but it's usually one of these groups of commands:
+
+### Redhat/CentOS/Fedora etc
+
+```
+$ sudo yum -y install docker
+$ sudo systemctl enable docker
+$ sudo systemctl start docker
+```
+
+### Ubuntu/Debian etc
+
+```
+$ sudo apt-get update && sudo apt-get install -y docker
+$ sudo systemctl enable docker
+$ sudo systemctl start docker
+```
+
+### Pull the docker image
+
+```
+$ sudo docker pull ineedmyip-server:latest
+```
+
+### Setup the systemd service
+
+```
+$ sudo curl -s -o /etc/systemd/system/ineedmyip.service https://raw.githubusercontent.com/iitggithub/ineedmyip/main/ineedmyip.service
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable ineedmyip
+```
+
+### Start the ineedmyip service
+
+```
+$ sudo systemctl start ineedmyip
+```
+
+### Test the service is working
+
+```
+$ nc localhost 22222
+127.0.0.1
+
+$
+```
+
+### Setup iptables/ufw etc
+
+Haven't placed rules here because it's different depending on what you're using. Refer to OS documentation for information on how to add this.
+
+The basic idea behind this is to make sure connections on ports 22 and 80 are instead sent to the docker container that's running on TCP port 22222.
+
+#### Forward TCP port 80 and 22 to 22222 via NAT PREROUTING
+
+#### Allow connections on TCP port 80, 22, and 22222

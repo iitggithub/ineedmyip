@@ -13,8 +13,7 @@ RestartSec=60s
 #ExecStart=/usr/bin/python /opt/ineedmyip/server/server.py
 ExecStartPre=-/usr/bin/docker exec %n stop
 ExecStartPre=-/usr/bin/docker rm %n
-ExecStartPre=/usr/bin/docker pull ineedmyip-server:latest
-ExecStart=/usr/bin/docker run --net=host --rm --name %n ineedmyip-server:latest
+ExecStart=/usr/bin/docker run --net=host --rm --name %n ineedmyip-server
 ExecStop=/usr/bin/docker stop %n
 
 [Install]
