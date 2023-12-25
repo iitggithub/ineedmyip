@@ -1,6 +1,8 @@
 [Unit]
 Description=ineedmyip server
-After=network.target
+#After=network.target
+After=docker.service
+Requires=docker.service
 
 [Service]
 StartLimitInterval=0
@@ -8,7 +10,12 @@ Restart=always
 TimeoutStartSec=0
 Restart=always
 RestartSec=60s
-ExecStart=/usr/bin/python /opt/ineedmyip/server/server.py
+#ExecStart=/usr/bin/python /opt/ineedmyip/server/server.py
+ExecStartPre=-/usr/bin/docker exec %n stop
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull ineedmyip-server:latest
+ExecStart=/usr/bin/docker run --net=host --rm --name %n ineedmyip-server:latest
+ExecStop=/usr/bin/docker stop %n
 
 [Install]
 WantedBy=multi-user.target
